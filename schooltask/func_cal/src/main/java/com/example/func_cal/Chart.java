@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
  * Created by KiBa-PC on 2017/4/18.
  */
 
-public class CoordinateAxisChart extends View {
+public class Chart extends View {
 
     public FunctionCalculator functionCalculator = new FunctionCalculatorImpl(this);
 
@@ -29,21 +29,29 @@ public class CoordinateAxisChart extends View {
     public final int DEFAULT_MAX = 5;
     public final int DEFAULT_SINGLE_POINT_COLOR = DEFAULT_AXIS_COLOR;
 
-    private static final String TAG = "CoordinateAxisChart";
-
-    public static final double PI = (double) Math.PI;
-
     public Canvas canvas;
     public float width; // view width
     public float height; // view height
 
+    /**
+     * 坐标轴画笔
+     */
     public Paint axisPaint;
+
+    /**
+     * 坐标轴宽度
+     */
+    public int axisWidth = DEFAULT_AXIS_WIDTH;
+
+    /**
+     * 函数画笔
+     */
     public Paint functionLinePaint;
-    public Paint pointPaint;
+
+    //public Paint pointPaint;
 
     public int lineColor = Color.RED;
     public int axisColor = DEFAULT_AXIS_COLOR; // axis color
-    public int axisWidth = DEFAULT_AXIS_WIDTH;
     public int functionLineWidth = DEFAULT_FUNCTION_LINE_WIDTH;
     public int axisPointRadius = DEFAULT_AXIS_POINT_RADIUS;
     public int segmentSize = DEFAULT_SEGMENT_SIZE; // by default, 50 points will be taken
@@ -61,27 +69,30 @@ public class CoordinateAxisChart extends View {
     public PointF rightPoint;
     public PointF topPoint;
     public PointF bottomPoint;
-    public String expression;
 
-    public boolean pointsGot;
+    /**
+     * 用户输入的表达式
+     */
+    public String expression_user_input;
 
+    //public PointF[] xPointsValues; // logic points, not raw points
 
-    public PointF[] xPointsValues; // logic points, not raw points
+    /**
+     * 表的配置信息
+     */
+    public ChartConfig chartConfig;
 
-    public ChartConfig config;
-
-
-    public CoordinateAxisChart(Context context) {
+    public Chart(Context context) {
         super(context);
         init(context);
     }
 
-    public CoordinateAxisChart(Context context, @Nullable AttributeSet attrs) {
+    public Chart(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public CoordinateAxisChart(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public Chart(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -103,14 +114,6 @@ public class CoordinateAxisChart extends View {
         functionLinePaint.setAntiAlias(true);
         functionLinePaint.setDither(true);
         functionLinePaint.setStyle(Paint.Style.STROKE);
-
-        pointPaint = new Paint();
-        pointPaint.setColor(DEFAULT_SINGLE_POINT_COLOR);
-        pointPaint.setStyle(Paint.Style.FILL);
-        pointPaint.setAntiAlias(true);
-
-        // prepare an array to cache the split points
-        xPointsValues = new PointF[segmentSize];
     }
 
     @Override
@@ -118,7 +121,9 @@ public class CoordinateAxisChart extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
-    //为view设置宽和高
+    /**
+     * 为view设置宽和高
+     */
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
@@ -136,7 +141,7 @@ public class CoordinateAxisChart extends View {
         super.onDraw(canvas);
         this.canvas = canvas;
         //要求绘制之前必须设置图像属性
-        if (config == null) {
+        if (chartConfig == null) {
             //如果没有设置图像属性，不予绘制
             return;
         }
@@ -147,7 +152,7 @@ public class CoordinateAxisChart extends View {
         //绘制坐标轴
         drawAxis(canvas);
 
-        getPoints(expression);
+        getPoints(expression_user_input);
 
     }
 
@@ -295,53 +300,53 @@ public class CoordinateAxisChart extends View {
     }
 
 
-    public void setConfig(ChartConfig config) {
-        setConfig(config, true);
+    public void setChartConfig(ChartConfig chartConfig) {
+        setConfig(chartConfig, true);
     }
 
     private void setConfig(ChartConfig config, boolean invalidate) {
-        this.config = config;
+        this.chartConfig = config;
         // axis color
         if (config.getAxisColor() != null) {
             setAxisColor(config.getAxisColor());
         } else {
             setAxisColor(DEFAULT_AXIS_COLOR);
-            this.config.setAxisColor(DEFAULT_AXIS_COLOR);
+            this.chartConfig.setAxisColor(DEFAULT_AXIS_COLOR);
         }
         // axis width
         if (config.getAxisWidth() != null) {
             setAxisWidth(config.getAxisWidth());
         } else {
             setAxisWidth(DEFAULT_AXIS_WIDTH);
-            this.config.setAxisWidth(DEFAULT_AXIS_WIDTH);
+            this.chartConfig.setAxisWidth(DEFAULT_AXIS_WIDTH);
         }
         // max values
         if (config.getMax() != null) {
             setMax(config.getMax());
         } else {
             setMax(DEFAULT_MAX);
-            this.config.setMax(DEFAULT_MAX);
+            this.chartConfig.setMax(DEFAULT_MAX);
         }
         // dx
         if (config.getPrecision() != null) {
             setPrecision(config.getPrecision());
         } else {
             setPrecision(DEFAULT_PRECISION);
-            this.config.setPrecision(DEFAULT_PRECISION);
+            this.chartConfig.setPrecision(DEFAULT_PRECISION);
         }
         // segment size
         if (config.getSegmentSize() != null) {
             setSegmentSize(config.getSegmentSize());
         } else {
             setSegmentSize(DEFAULT_SEGMENT_SIZE);
-            this.config.setSegmentSize(DEFAULT_SEGMENT_SIZE);
+            this.chartConfig.setSegmentSize(DEFAULT_SEGMENT_SIZE);
         }
         // axis point radius
         if (config.getAxisPointRadius() != null) {
             setAxisPointRadius(config.getAxisPointRadius());
         } else {
             setAxisPointRadius(DEFAULT_AXIS_POINT_RADIUS);
-            this.config.setAxisPointRadius(DEFAULT_AXIS_POINT_RADIUS);
+            this.chartConfig.setAxisPointRadius(DEFAULT_AXIS_POINT_RADIUS);
         }
         if (invalidate) {
             invalidate();

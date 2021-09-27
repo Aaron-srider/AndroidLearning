@@ -7,77 +7,72 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
-    CoordinateAxisChart coordinateAxisChart;
+    Chart chart;
     Button largerBtn;
     Button smallerBtn;
     EditText input;
     Button cal;
-    //Button largerBtn;
-    //Button largerBtn;
+
+    public void initField() {
+
+        input = (EditText) findViewById(R.id.input);
+
+        largerBtn = (Button) findViewById(R.id.largerBtn);
+        smallerBtn = (Button) findViewById(R.id.smallerBtn);
+        cal = (Button) findViewById(R.id.cal);
+
+        chart = (Chart) findViewById(R.id.coordinateAxisChart);
+        ChartConfig config = new ChartConfig();
+        config.setMax(50);
+        config.setPrecision(1);
+        config.setSegmentSize(50);
+        config.setAxisPointRadius(3);
+        chart.setChartConfig(config);
+
+    }
+
+
+    public void registerEvent() {
+        largerBtn.setOnClickListener((View view) -> {
+            if (chart.unitLength > 10) {
+                smallerBtn.setEnabled(true);
+                smallerBtn.setText("缩小");
+            }
+
+            chart.unitLength += 10;
+            chart.invalidate();
+        });
+
+        smallerBtn.setOnClickListener((View view) -> {
+            if (chart.unitLength < 15) {
+                Button btn = (Button) view;
+                btn.setEnabled(false);
+                btn.setText("最小化");
+
+            } else {
+                chart.unitLength -= 10;
+                chart.invalidate();
+            }
+
+        });
+
+        cal.setOnClickListener((View view) -> {
+            String text = input.getText().toString();
+            chart.expression_user_input = text;
+            chart.invalidate();
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        coordinateAxisChart = (CoordinateAxisChart) findViewById(R.id.coordinateAxisChart);
+        //初始化属性
+        initField();
 
-        input= (EditText) findViewById(R.id.input);
-
-        ChartConfig config = new ChartConfig();
-        config.setMax(50);
-        config.setPrecision(1);
-        config.setSegmentSize(50);
-        config.setAxisPointRadius(3);
-        coordinateAxisChart.setConfig(config);
-
-        largerBtn = (Button) findViewById(R.id.largerBtn);
-        largerBtn.setOnClickListener((View view) -> {
-
-            if (coordinateAxisChart.unitLength > 10) {
-                smallerBtn.setEnabled(true);
-                smallerBtn.setText("缩小");
-
-            }
-
-            coordinateAxisChart.unitLength += 10;
-            coordinateAxisChart.invalidate();
-
-        });
-
-        smallerBtn = (Button) findViewById(R.id.smallerBtn);
-        smallerBtn.setOnClickListener((View view) -> {
-            if (coordinateAxisChart.unitLength < 15) {
-                Button btn = (Button) view;
-                btn.setEnabled(false);
-                btn.setText("最小化");
-
-            }else{
-                coordinateAxisChart.unitLength -= 10;
-                coordinateAxisChart.invalidate();
-            }
-
-        });
-
-
-        cal = (Button) findViewById(R.id.cal);
-        cal.setOnClickListener((View view) -> {
-            String text = input.getText().toString();
-            coordinateAxisChart.expression=text;
-            coordinateAxisChart.invalidate();
-
-
-
-        });
-
-
-
-    }
-
-    @Override
-    public void onClick(View v) {
-
+        registerEvent();
     }
 }
