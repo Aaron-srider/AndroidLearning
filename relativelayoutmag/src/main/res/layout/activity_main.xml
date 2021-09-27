@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="联网检测到最新版本，是否更新以保持同步？" />
+
+    <Button
+        android:id="@+id/yes"
+        android:text="更新"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notice"
+        android:layout_alignRight="@id/notice" />
+
+    <Button
+        android:id="@+id/no"
+        android:text="不更新"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notice"
+        android:layout_toLeftOf="@id/yes" />
+
+</RelativeLayout>
