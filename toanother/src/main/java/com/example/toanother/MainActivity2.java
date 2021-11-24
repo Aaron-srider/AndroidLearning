@@ -1,4 +1,4 @@
-package com.example.practice2;
+package com.example.toanother;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

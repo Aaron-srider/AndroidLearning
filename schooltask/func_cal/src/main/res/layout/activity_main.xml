@@ -33,8 +33,10 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
+            android:backgroundTint="#D54545"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:text="计算" android:id="@+id/cal" />
-
     </LinearLayout>
 
 
@@ -48,12 +50,18 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:backgroundTint="#D54545"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_height="match_parent"
             android:text="放大" android:id="@+id/largerBtn" />
 
         <Button
             android:layout_width="0dp"
+            android:backgroundTint="#D54545"
             android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_height="match_parent"
             android:text="缩小" android:id="@+id/smallerBtn" />
 

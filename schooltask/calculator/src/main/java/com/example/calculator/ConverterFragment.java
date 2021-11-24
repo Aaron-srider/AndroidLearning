@@ -79,7 +79,6 @@ public class ConverterFragment extends androidx.fragment.app.Fragment implements
                 R.id.ce
         };
 
-
         for (int i = 0; i < idList.length; i++) {
             view.findViewById(idList[i]).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -214,4 +213,5 @@ public class ConverterFragment extends androidx.fragment.app.Fragment implements
             }
         }
     }
+
 }

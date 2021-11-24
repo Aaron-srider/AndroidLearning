@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity  {
     private ArrayFragmentPagerAdapter pagerAdapter;
     private ArrayList<Fragment> fragments = new ArrayList<>();
 
-
-
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +32,6 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -47,10 +43,6 @@ public class MainActivity extends AppCompatActivity  {
 
         fragments.add(new HelpPageFragment());
         tabLayout.addTab(tabLayout.newTab());
-        //fragments.add(new TranslateFragment());
-        //tabLayout.addTab(tabLayout.newTab());
-        //fragments.add(new HelpFragment());
-        //tabLayout.addTab(tabLayout.newTab());
 
         tabLayout.setupWithViewPager(viewPager);
         pagerAdapter = new ArrayFragmentPagerAdapter(getSupportFragmentManager(), 0, fragments);
@@ -59,15 +51,7 @@ public class MainActivity extends AppCompatActivity  {
         tabLayout.getTabAt(0).setText("计算器");
         tabLayout.getTabAt(1).setText("换算");
         tabLayout.getTabAt(2).setText("帮助");
-
-
-
     }
-
-
-
-
-
 }
 
 

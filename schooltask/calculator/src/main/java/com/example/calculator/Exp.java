@@ -8,16 +8,57 @@ import lombok.Data;
 @Data
 public class Exp implements Observable {
 
+    /**
+     * 观察者
+     */
+    Observer observer;
+
+    @Override
+    public void registerObserver(Observer observer) {
+        this.observer = observer;
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        this.observer = null;
+    }
+
+    @Override
+    public void notifyObserver() {
+        observer.update(this);
+    }
+
+    /**
+     * 处于输入状态
+     */
     public static final Integer INPUTTING = 1;
+
+    /**
+     * 已经算出结果
+     */
     public static final Integer RESULTCOMMINGOUT = 2;
+
+    /**
+     * 结果出错
+     */
     public static final Integer ERROR = 3;
 
+    /**
+     * 保存计算器的状态
+     */
     Integer status = INPUTTING;
 
+    /**
+     * 记录表达式（用户输入）
+     */
     private String expression = "";
+
+    /**
+     * 保存表达式的结果
+     */
     private String expResult = "";
 
-    Observer observer;
+
 
     WebView webView;
 
@@ -49,8 +90,8 @@ public class Exp implements Observable {
         webView.evaluateJavascript("javascript:" + expression
                 .replace("sin", "Math.sin")
                 .replace("cos", "Math.cos")
-                .replace("tan", "Math.tan")
-                .replace("ln", "Math.log"), result -> {
+                .replace("ln", "Math.log"),
+        result -> {
             if (result.equals("null") || result.equals("undefined")) {
                 expression = expResult = "错误";
                 status = ERROR;
@@ -62,18 +103,5 @@ public class Exp implements Observable {
         });
     }
 
-    @Override
-    public void registerObserver(Observer observer) {
-        this.observer = observer;
-    }
 
-    @Override
-    public void removeObserver(Observer observer) {
-        this.observer = null;
-    }
-
-    @Override
-    public void notifyObserver() {
-        observer.update(this);
-    }
 }

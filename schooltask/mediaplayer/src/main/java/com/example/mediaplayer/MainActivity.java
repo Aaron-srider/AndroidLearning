@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
             @Override
             public void onClick(View view) {
                 music.next();
-                music.startFromBegin(music.getCurrentIndex());
+                music.startFromBegin(music.currentIndex);
             }
         });
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
             @Override
             public void onClick(View view) {
                 music.previous();
-                music.startFromBegin(music.getCurrentIndex());
+                music.startFromBegin(music.currentIndex);
             }
         });
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                music.setPlayMode(Music.RANDOM);
+                music.playMode=Music.RANDOM;
             }
         });
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         sequence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                music.setPlayMode(Music.SEQUENCE);
+                music.playMode=Music.SEQUENCE;
             }
         });
 
@@ -90,17 +90,17 @@ public class MainActivity extends AppCompatActivity implements Observer {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 isSeekbarChanging = false;
                 //在当前位置播放
-                music.getPlayer().seekTo(seekBar.getProgress());
+                music.player.seekTo(seekBar.getProgress());
 //                tv_start.setText(calculateTime(mediaPlayer.getCurrentPosition() / 1000));
             }
         });
 
         music = createMusic();
 
-        music.setMainActivity(this);
+        music.mainActivity=this;
         music.registerObserver(this);
 
-        File[] array2 = music.getFileList().toArray(new File[music.getFileList().size()]);
+        File[] array2 = music.fileList.toArray(new File[music.fileList.size()]);
 
         MusicFileAdapter adapter = new MusicFileAdapter(this, R.layout.musiclist, array2, music);
 
@@ -163,6 +163,11 @@ public class MainActivity extends AppCompatActivity implements Observer {
         return result;
     }
 
+    //@Override
+    //public void update(Observable observable) {
+    //
+    //}
+
     @Override
     public void update(Observable observable) {
         if(observable instanceof Music) {
@@ -170,9 +175,9 @@ public class MainActivity extends AppCompatActivity implements Observer {
             Music music = (Music) observable;
             if(music.isStart()) {
                 seekbar.setProgress(0);
-                seekbar.setMax(music.getPlayer().getDuration());
+                seekbar.setMax(music.player.getDuration());
             } else if(music.isPlay()) {
-                seekbar.setProgress(music.getPlayer().getCurrentPosition());
+                seekbar.setProgress(music.player.getCurrentPosition());
             }
         }
     }

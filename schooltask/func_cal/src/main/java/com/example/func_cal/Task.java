@@ -25,7 +25,6 @@ public class Task {
      */
     Queue<String> expressions = new ConcurrentLinkedQueue<>();
 
-
     /**
      * 存放计算结果
      */

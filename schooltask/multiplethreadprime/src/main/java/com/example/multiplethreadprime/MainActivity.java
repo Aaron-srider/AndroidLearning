@@ -23,10 +23,11 @@ public class MainActivity extends AppCompatActivity {
         final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-
                 textView.setText(msg.arg1 == 1 ? "是":"否");
             }
         };
+
+
         final Runnable myWorker = new Runnable() {
             @Override
             public void run() {
@@ -60,6 +61,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
 
 }

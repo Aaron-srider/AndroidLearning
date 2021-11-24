@@ -13,8 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
+import com.example.calservice.CalcService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //绑定service
         Intent intent = new Intent(MainActivity.this, CalcService.class);
         bindService(intent, mServiceConnection, Service.BIND_AUTO_CREATE);
         Log.v(TAG, "bind");
-
 
         Button add = findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 getEditText();
                 String result = mCalcService.add(a, b);
                 resultText.setText(result);
-
-
             }
         });
         Button sub = findViewById(R.id.sub);

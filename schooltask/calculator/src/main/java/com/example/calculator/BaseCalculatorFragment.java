@@ -19,6 +19,18 @@ public class BaseCalculatorFragment extends androidx.fragment.app.Fragment imple
     TextView output;
 
     @Override
+    public void update(Observable observable) {
+        if(observable instanceof Exp) {
+            if(exp.getStatus().equals(Exp.INPUTTING)) {
+                output.setText(exp.getExpression());
+            }
+            else if(exp.getStatus().equals(Exp.RESULTCOMMINGOUT) || exp.getStatus().equals(Exp.ERROR)) {
+                output.setText(exp.getExpResult());
+            }
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -45,7 +57,12 @@ public class BaseCalculatorFragment extends androidx.fragment.app.Fragment imple
                 R.id.multiply,
                 R.id.divide,
                 R.id.equal,
-                R.id.ce
+                R.id.ce,
+                R.id.sin,
+                R.id.cos,
+                R.id.ln,
+                R.id.leftqu,
+                R.id.rightqu
         };
 
 
@@ -54,9 +71,11 @@ public class BaseCalculatorFragment extends androidx.fragment.app.Fragment imple
                 @Override
                 public void onClick(View view) {
 
+                    //接收输入
                     Button button = (Button) view;
                     String userInput = button.getText().toString();
 
+                    //改变模型
                     if (userInput.equals("=")) {
                         exp.cal();
                     } else {
@@ -78,17 +97,7 @@ public class BaseCalculatorFragment extends androidx.fragment.app.Fragment imple
         return view;
     }
 
-    @Override
-    public void update(Observable observable) {
-        if(observable instanceof Exp) {
-            if(exp.getStatus().equals(Exp.INPUTTING)) {
-                output.setText(exp.getExpression());
-            }
-            else if(exp.getStatus().equals(Exp.RESULTCOMMINGOUT) || exp.getStatus().equals(Exp.ERROR)) {
-                output.setText(exp.getExpResult());
-            }
-        }
-    }
+
 }
 
 
