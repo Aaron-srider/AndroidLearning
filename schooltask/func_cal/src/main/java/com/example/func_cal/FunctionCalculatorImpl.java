@@ -27,7 +27,6 @@ public class FunctionCalculatorImpl implements FunctionCalculator {
     }
 
     private void solve(Task task) {
-
         AtomicInteger count= new AtomicInteger();
         //批量计算表达式
         for (String expr : task.expressions) {
@@ -38,10 +37,8 @@ public class FunctionCalculatorImpl implements FunctionCalculator {
                     .replace("log", "Math.log"), result -> {
                 count.getAndIncrement();
                 Log.v("debug", String.valueOf(count));
-
                 //移除一个任务点
                 Float x = task.xList.remove();
-
                 //获取结果
                 Float y;
                 try {
@@ -49,24 +46,18 @@ public class FunctionCalculatorImpl implements FunctionCalculator {
                 } catch (Exception e) {
                     y = Float.NaN;
                 }
-
                 //得到计算的逻辑点结果
                 PointF logicPoint = new PointF(x, y);
-
                 //转换到屏幕上的点
                 PointF rowPoint = Chart.convertLogicalPoint2Raw(logicPoint, view.unitLength, view.origin);
-
                 //加入结果点集
                 task.pointList.add(rowPoint);
-
                 //加入结果点集
                 task.logicPointList.add(logicPoint);
-
                 //如果一批计算量已经完成，绘制即可
                 if (solveEnd(task)) {
                     functionDrawer.drawTaskOnCanvas(task);
                 }
-
             });
         }
     }

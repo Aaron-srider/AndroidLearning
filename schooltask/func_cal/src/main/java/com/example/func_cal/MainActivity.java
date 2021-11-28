@@ -41,24 +41,20 @@ public class MainActivity extends AppCompatActivity {
                 smallerBtn.setEnabled(true);
                 smallerBtn.setText("缩小");
             }
-
             chart.unitLength += 10;
             chart.invalidate();
         });
-
         smallerBtn.setOnClickListener((View view) -> {
             if (chart.unitLength < 15) {
                 Button btn = (Button) view;
                 btn.setEnabled(false);
                 btn.setText("最小化");
-
             } else {
                 chart.unitLength -= 10;
                 chart.invalidate();
             }
 
         });
-
         cal.setOnClickListener((View view) -> {
             String text = input.getText().toString();
             chart.expression_user_input = text;

@@ -44,15 +44,12 @@ class Music implements Observable {
      * @param position 音乐在列表中的位置
      */
     public void startFromBegin(int position) {
-
-        //如果播放器为空，重新创建
+            //如果播放器为空，重新创建
         if (player == null) {
             player = new MediaPlayer();
         }
-
         //重置播放器
         player.reset();
-
         //必须在reset后注册，否则被reset置空
         player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -68,22 +65,16 @@ class Music implements Observable {
         try {
             //设置音乐文件来源
             player.setDataSource(fileList.get(position).getPath());
-
             //准备（缓冲文件）
             player.prepare();
-
             //播放开始
             player.start();
-
             //更新状态
             currentIndex = position;
-
             //更新状态
             status = START;
 
-
             notifyObservers();
-
 
             //为进度条设置时间监听器，负责将歌曲进度同步到进度条
             timer.schedule(new TimerTask() {

@@ -22,7 +22,6 @@ public class WordsDBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(SQL_CREATE_DATABASE);
 
-
     }
 
     @Override

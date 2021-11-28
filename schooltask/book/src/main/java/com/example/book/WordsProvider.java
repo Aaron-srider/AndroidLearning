@@ -9,7 +9,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,20 +94,6 @@ public class WordsProvider extends ContentProvider {
                 //System.out.printf("");
                 throw new IllegalArgumentException("Unkonwn Uri:" + uri);
         }
-
-
-        //WordDaoImpl wordDaoImpl = (WordDaoImpl) this.wordDao;
-        //SQLiteDatabase writableDatabase = wordDaoImpl.getWritableDatabase();
-        //
-        //String sql ="select * from words where word like ?";
-        //Cursor words = writableDatabase.rawQuery(sql, new String[]{'%' + likeStr + '%'});
-        //List<WordContent.WordItem> wordList = new ArrayList<>();
-        //while (words.moveToNext()) {
-        //
-        //    wordList.add(new WordContent.WordItem(id, word, meaning, sample));
-        //}
-        //return wordList;
-        //return null;
     }
 
 

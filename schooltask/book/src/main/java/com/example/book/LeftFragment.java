@@ -21,6 +21,7 @@ public class LeftFragment extends Fragment implements RefreshListObserver {
     RefreshDetailObserver refreshDetailObserver;
 
     MyItemRecyclerViewAdapter myItemRecyclerViewAdapter;
+
     List<WordContent.WordItem> allItems;
 
     public void setRefreshDetailObserver(RefreshDetailObserver refreshDetailObserver) {

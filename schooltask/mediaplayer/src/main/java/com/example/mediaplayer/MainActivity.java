@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                music.playMode=Music.RANDOM;
+                music.playMode = Music.RANDOM;
             }
         });
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
         sequence.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                music.playMode=Music.SEQUENCE;
+                music.playMode = Music.SEQUENCE;
             }
         });
 
@@ -77,15 +77,13 @@ public class MainActivity extends AppCompatActivity implements Observer {
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                int duration2 = mediaPlayer.getDuration() / 1000;//获取音乐总时长
-//                int position = mediaPlayer.getCurrentPosition();//获取当前播放的位置
-//                tv_start.setText(calculateTime(position / 1000));//开始时间
-//                tv_end.setText(calculateTime(duration2));//总时长
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
                 isSeekbarChanging = true;
             }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 isSeekbarChanging = false;
@@ -97,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
         music = createMusic();
 
-        music.mainActivity=this;
+        music.mainActivity = this;
         music.registerObserver(this);
 
         File[] array2 = music.fileList.toArray(new File[music.fileList.size()]);
@@ -170,13 +168,13 @@ public class MainActivity extends AppCompatActivity implements Observer {
 
     @Override
     public void update(Observable observable) {
-        if(observable instanceof Music) {
+        if (observable instanceof Music) {
 
             Music music = (Music) observable;
-            if(music.isStart()) {
+            if (music.isStart()) {
                 seekbar.setProgress(0);
                 seekbar.setMax(music.player.getDuration());
-            } else if(music.isPlay()) {
+            } else if (music.isPlay()) {
                 seekbar.setProgress(music.player.getCurrentPosition());
             }
         }
